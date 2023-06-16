@@ -3,13 +3,17 @@
     <div class="app">
       <Navigation/>
       <router-view />
+      <Home/>
+      <Footer/>
 
     </div>
   </div>
 </template>
 
 <script setup>
+import Footer from './components/Footer.vue';
 import Navigation from './components/Navigation.vue';
+import Home from './views/Home.vue';
 </script>
 
 <style scoped>
