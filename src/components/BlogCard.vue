@@ -110,7 +110,7 @@ import { PropType, computed } from "vue";
         display: block;
         border-radius: 8px 8px 0 0;
         z-index: 1;
-        max-width: 400px;
+        max-width: 350px;
         min-height: 200px;
         object-fit: cover;
     }

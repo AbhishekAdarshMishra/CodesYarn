@@ -100,6 +100,8 @@ const user = computed(() => {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    align-items: center;
+    justify-content: center;
 }
 .updates {
     .container {
