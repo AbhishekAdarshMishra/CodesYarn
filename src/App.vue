@@ -2,8 +2,8 @@
   <div class="app-wrapper">
     <div class="app">
       <Navigation/>
-      <router-view />
-      <Home/>
+      <router-view></router-view>
+      <!-- <Home/> -->
       <Footer/>
 
     </div>

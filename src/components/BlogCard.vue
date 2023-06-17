@@ -1,23 +1,23 @@
 <template>
     <div class="blog-card">
-        <div v-show="editPost" class="icons">
+        <div v-show="BlogCardsEdit" class="icons">
             <div @click="editBlog" class="icon">
                 <!-- <Edit class="edit" /> -->
-                <img src="../assets/icons/edit.png" class="edit"/>
+                <img src="../assets/icons/edit.png" class="edit" />
             </div>
             <div @click="deletePost" class="icon">
                 <!-- <Delete class="delete" /> -->
-                <img src="../assets/icons/delete.png" class="delete"/>
+                <img src="../assets/icons/delete.png" class="delete" />
             </div>
         </div>
         <img class="photo" src="../assets/BlogPhotos/a.jpg" alt="" />
         <div class="info">
             <h4>{{ props.post.blogTitle }}</h4>
             <h6>Posted on: {{ new Date(props.post.blogDate).toLocaleString("en-us", { dateStyle: "long" }) }}</h6>
-            <router-link class="link" :to="{ name: 'ViewBlog', params: { blogid: props.post.blogID } }">
-                View The Post
-                <!-- <Arrow class="arrow" /> -->
-            </router-link>
+            <!-- <router-link class="link" :to="{ name: 'ViewBlog', params: { blogid: props.post.blogID } }"> -->
+            View The Post
+            <!-- <Arrow class="arrow" /> -->
+            <!-- </router-link> -->
         </div>
     </div>
 </template>
@@ -25,28 +25,22 @@
 <script lang="ts" setup>
 // import Arrow from "../assets/Icons/arrow-right-light.svg";
 import { PropType, computed } from "vue";
-// import Edit from "../assets/Icons/edit-regular.svg";
-// import Delete from "../assets/Icons/trash-regular.svg";
+import { useStore } from "../store/store";
+import { storeToRefs } from "pinia";
 
-    
-    const props = defineProps({
+const { BlogCardsEdit} = storeToRefs(useStore());
+const props = defineProps({
     post: {
         type: Object as PropType<any>
     }
 })
-       function deletePost() {
-            // this.$store.dispatch("deletePost", this.post.blogID);
-        }
-        function editBlog() {
-            // this.$router.push({ name: "EditBlog", params: { blogid: this.post.blogID } });
-        }
+function deletePost() {
+    // this.$store.dispatch("deletePost", this.post.blogID);
+}
+function editBlog() {
+    // this.$router.push({ name: "EditBlog", params: { blogid: this.post.blogID } });
+}
 
-    
-        const editPost = computed(()=>{
-            // return this.$store.state.editPost;
-            return true;
-        });
-  
 </script>
 
 <style lang="scss" scoped>

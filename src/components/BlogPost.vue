@@ -6,14 +6,14 @@
                 <h2 v-else>{{ props.post.blogTitle }}</h2>
                 <p v-if="props.post.welcomeScreen">{{ props.post.blogPost }}</p>
                 <p class="content-preview" v-else v-html="props.post.blogHTML"></p>
-                <router-link class="link link-light" v-if="props.post.welcomeScreen" to="#">
+                <!-- <router-link class="link link-light" v-if="props.post.welcomeScreen" to="#"> -->
                     Login/Register
                     <!-- <Arrow class="arrow arrow-light" /> -->
-                </router-link>
-                <router-link class="link" v-else :to="{ name: 'ViewBlog', params: { blogid: this.post.blogID } }">
+                <!-- </router-link> -->
+                <!-- <router-link class="link" v-else :to="{ name: 'ViewBlog', params: { blogid: this.post.blogID } }"> -->
                     View The Post
                     <!-- <Arrow class="arrow" /> -->
-                </router-link>
+                <!-- </router-link> -->
             </div>
         </div>
         <div class="blog-photo">

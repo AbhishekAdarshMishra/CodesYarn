@@ -7,8 +7,8 @@
             </div>
             <div class="nav-links">
                 <ul v-show="!state.mobileNav && !state.mobile">
-                    <router-link class="link" to="#">Home</router-link>
-                    <router-link class="link" to="#">Blogs</router-link>
+                    <router-link class="link" :to="{name: 'Home'}">Home</router-link>
+                    <router-link class="link" :to="{name: 'Blogs'}">Blogs</router-link>
                     <router-link class="link" to="#">Create Page</router-link>
                     <router-link class="link" to="#">Login/Register</router-link>
                 </ul>
@@ -16,8 +16,8 @@
             <img @click="toggleMobileNav" src="../assets/icons/menu.svg" class="menu-icon" v-show="state.mobile" />
             <transition name="mobile-nav">
                 <ul class="mobile-nav" v-show="state.mobileNav">
-                    <router-link class="link" to="#">Home</router-link>
-                    <router-link class="link" to="#">Blogs</router-link>
+                    <router-link class="link" :to="{name: 'Home'}">Home</router-link>
+                    <router-link class="link" :to="{name: 'Blogs'}">Blogs</router-link>
                     <router-link class="link" to="#">Create Page</router-link>
                     <router-link class="link" to="#">Login/Register</router-link>
                 </ul>
@@ -75,7 +75,7 @@ header {
     transition: 0.3s color ease;
 
     &:hover {
-        color: gray;
+        color: gray !important;;
         cursor: pointer;
     }
 }
@@ -107,6 +107,8 @@ nav {
             margin-right: 22px;
 
             .link {
+                color: #000;
+                text-decoration: none;
                 margin-right: 22px;
             }
 

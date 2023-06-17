@@ -6,16 +6,16 @@
             <div class="container">
                 <h3>View More Recent Blogs</h3>
                 <div class="blog-cards">
-                    <BlogCard :post="post" v-for="(post, index) in blogPostsCards" :key="index" />
+                    <BlogCard :post="post" v-for="(post, index) in allBlogCards" :key="index" />
                 </div>
             </div>
         </div>
         <div v-if="!user" class="updates">
             <div class="container">
                 <h2>never miss a post. Register for your free account today!</h2>
-                <router-link class="router-button" to="#"> Register for FireBlogs
-                    <!-- <Arrow class="arrow arrow-light" /> -->
-                </router-link>
+                <!-- <router-link class="router-button" to="#">  -->
+                    Register for CodesYarn
+                <!-- </router-link> -->
             </div>
         </div>
     </div>
@@ -25,6 +25,8 @@
 import { computed } from "vue";
 import BlogPost from "../components/BlogPost.vue";
 import BlogCard from "../components/BlogCard.vue";
+import {useStore} from '../store/store';
+import {storeToRefs} from 'pinia';
 // import Arrow from "../assets/Icons/arrow-right-light.svg";
 
 interface State {
@@ -35,7 +37,6 @@ interface State {
         photo: string
     },
     sampleBlogPost: any[],
-    sampleCard: any[]
 }
 
 const state: State = {
@@ -58,24 +59,14 @@ const state: State = {
             blogCoverPhoto: "../assets/BlogPhotos/b.png"
         }
     ],
-    sampleCard: [
-        { blogTitle: "Blog Card #1", blogCoverPhoto: "stock-1", blogDate: "May 1, 2023"},
-        { blogTitle: "Blog Card #2", blogCoverPhoto: "stock-2", blogDate: "May 2, 2023" },
-        { blogTitle: "Blog Card #3", blogCoverPhoto: "stock-3", blogDate: "May 3, 2023" },
-        { blogTitle: "Blog Card #4", blogCoverPhoto: "stock-4", blogDate: "May 4, 2023" },
-
-    ]
 }
 
+const { BlogCards, allBlogCards } = storeToRefs(useStore())
 
 
 const blogPostsFeed = computed(() => {
     // return this.$store.getters.blogPostsFeed;
     return state.sampleBlogPost;
-});
-const blogPostsCards = computed(() => {
-    // return this.$store.getters.blogPostsCards;
-    return state.sampleCard;
 });
 const user = computed(() => {
     // return this.$store.state.user;
@@ -93,7 +84,7 @@ const user = computed(() => {
         margin-bottom: 32px;
     }
     background-color: rgb(240, 240, 240);
-    padding: 20px
+    padding: 20px;
 }
 .blog-cards {
     margin: 0;
