@@ -10,7 +10,7 @@
                     <router-link class="link" :to="{name: 'Home'}">Home</router-link>
                     <router-link class="link" :to="{name: 'Blogs'}">Blogs</router-link>
                     <router-link class="link" to="#">Create Page</router-link>
-                    <router-link class="link" to="#">Login/Register</router-link>
+                    <router-link class="link" :to="{name: 'Login'}">Login/Register</router-link>
                 </ul>
             </div>
             <img @click="toggleMobileNav" src="../assets/icons/menu.svg" class="menu-icon" v-show="state.mobile" />
@@ -19,7 +19,7 @@
                     <router-link class="link" :to="{name: 'Home'}">Home</router-link>
                     <router-link class="link" :to="{name: 'Blogs'}">Blogs</router-link>
                     <router-link class="link" to="#">Create Page</router-link>
-                    <router-link class="link" to="#">Login/Register</router-link>
+                    <router-link class="link" :to="{name: 'Login'}">Login/Register</router-link>
                 </ul>
             </transition>
         </nav>

@@ -13,9 +13,9 @@
         <div v-if="!user" class="updates">
             <div class="container">
                 <h2>never miss a post. Register for your free account today!</h2>
-                <!-- <router-link class="router-button" to="#">  -->
+                <router-link class="router-button" to="#"> 
                     Register for CodesYarn
-                <!-- </router-link> -->
+                </router-link>
             </div>
         </div>
     </div>

@@ -1,19 +1,39 @@
 <template>
   <div class="app-wrapper">
     <div class="app">
-      <Navigation/>
-      <router-view></router-view>
-      <!-- <Home/> -->
-      <Footer/>
+      <Navigation v-if="route"/>
+      <router-view ></router-view>
+      <Footer v-if="route"/>
 
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed, onMounted } from 'vue';
 import Footer from './components/Footer.vue';
 import Navigation from './components/Navigation.vue';
-import Home from './views/Home.vue';
+import { useRoute } from 'vue-router'
+import {useStore} from './store/store';
+import firebase from "firebase/compat/app";
+import 'firebase/compat/firestore';
+
+const route = computed(()=>{
+  if(useRoute().path=='/login' || useRoute().path=='/register' || useRoute().path=='/forgetPassword')
+    return false;
+  return true;
+});
+
+const { updateUser, getCurrentUser } = useStore();
+
+onMounted(()=>{
+  firebase.auth().onAuthStateChanged((user)=> {
+    updateUser(user);
+    if(user) {
+      getCurrentUser();
+    }
+  })
+})
 </script>
 
 <style scoped>
