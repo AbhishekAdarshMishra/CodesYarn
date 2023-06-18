@@ -13,7 +13,7 @@
         <div v-if="!user" class="updates">
             <div class="container">
                 <h2>never miss a post. Register for your free account today!</h2>
-                <router-link class="router-button" to="#"> 
+                <router-link class="router-button" :to="{name: 'Register'}"> 
                     Register for CodesYarn
                 </router-link>
             </div>
@@ -27,7 +27,6 @@ import BlogPost from "../components/BlogPost.vue";
 import BlogCard from "../components/BlogCard.vue";
 import {useStore} from '../store/store';
 import {storeToRefs} from 'pinia';
-// import Arrow from "../assets/Icons/arrow-right-light.svg";
 
 interface State {
     welcomeScreen: {
@@ -50,27 +49,22 @@ const state: State = {
     sampleBlogPost: [
         {
             blogTitle:"This is a Filler Title",
-            blogHTML:"<div>Hello</div>",
+            blogHTML:"<div>This is Filler</div>",
             blogCoverPhoto: "../assets/BlogPhotos/a.jpg"
         },
         {
             blogTitle: "This is a Filler Title",
-            blogHTML: "<div>Hello2</div>",
+            blogHTML: "<div>This is Filler</div>",
             blogCoverPhoto: "../assets/BlogPhotos/b.png"
         }
     ],
 }
 
-const { BlogCards, allBlogCards } = storeToRefs(useStore())
+const { allBlogCards, user } = storeToRefs(useStore());
 
 
 const blogPostsFeed = computed(() => {
-    // return this.$store.getters.blogPostsFeed;
     return state.sampleBlogPost;
-});
-const user = computed(() => {
-    // return this.$store.state.user;
-    return false;
 });
 
 
@@ -110,10 +104,17 @@ const user = computed(() => {
             display: flex;
             font-size: 14px;
             text-decoration: none;
+            color: white;
+            background-color: rgb(49, 47, 47);
+            padding: 5px 15px;
+            border-radius: 20px;
 
             @media (min-width: 800px) {
                 margin-left: auto;
             }
+        }
+        .router-button:hover {
+            background: rgb(85, 85, 87);
         }
 
         h2 {

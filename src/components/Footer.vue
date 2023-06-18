@@ -26,12 +26,12 @@
                     <ul>
                         <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
                         <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
-                        <!-- <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }"> -->
-                            Create Post
-                        <!-- </router-link> -->
-                        <!-- <router-link v-if="!user" class="link" :to="{ name: 'Login' }"> -->
+                        <router-link v-if="isprofileAdmin" class="link" :to="{ name: 'CreatePost' }">
+                                Create Post
+                        </router-link>
+                        <router-link v-if="!user" class="link" :to="{ name: 'Login' }">
                             Login In / Register
-                        <!-- </router-link> -->
+                        </router-link>
                     </ul>
                 </div>
             </div>
@@ -43,16 +43,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
-
-const user = computed(()=> {
-    // return this.$store.state.user;
-    return "hello";
-});
-const admin= computed(()=> {
-    // return this.$store.state.profileAdmin;
-    return "hello2"
-});
+import {useStore} from '../store/store';
+import {storeToRefs} from 'pinia';
+const { user, isprofileAdmin } = storeToRefs(useStore());
 
 </script>
 

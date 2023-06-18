@@ -6,13 +6,11 @@
                 <h2 v-else>{{ props.post.blogTitle }}</h2>
                 <p v-if="props.post.welcomeScreen">{{ props.post.blogPost }}</p>
                 <p class="content-preview" v-else v-html="props.post.blogHTML"></p>
-                <!-- <router-link class="link link-light" v-if="props.post.welcomeScreen" to="#"> -->
+                <router-link class="link link-light" v-if="props.post.welcomeScreen" to="#">
                     Login/Register
-                    <!-- <Arrow class="arrow arrow-light" /> -->
-                <!-- </router-link> -->
+                </router-link>
                 <!-- <router-link class="link" v-else :to="{ name: 'ViewBlog', params: { blogid: this.post.blogID } }"> -->
-                    View The Post
-                    <!-- <Arrow class="arrow" /> -->
+                   <div class="link">View The Post</div> 
                 <!-- </router-link> -->
             </div>
         </div>
@@ -25,20 +23,15 @@
 
 <script lang="ts" setup>
 import { PropType, computed } from 'vue';
+import {useStore} from '../store/store';
+import {storeToRefs} from 'pinia';
 
-
+const {  user } = storeToRefs(useStore())
 const props = defineProps({
     post: {
         type: Object as PropType<any>
     }
 })
-
-console.log('props'+JSON.stringify(props))
-
-const user = computed(() => {
-    // return this.$store.state.user;
-    return "Abhishek Adarsh Mishra"
-});
 
 
 </script>
@@ -76,7 +69,7 @@ const user = computed(() => {
             padding: 72px 24px;
 
             @media (min-width: 700px) {
-                padding: 0 24px;
+                padding: 0 0px;
             }
 
             h2 {
@@ -115,12 +108,16 @@ const user = computed(() => {
 
                 &:hover {
                     border-bottom-color: #303030;
+                    cursor: pointer;
                 }
             }
 
             .link-light {
+                color: white;
+                text-decoration: none;
                 &:hover {
                     border-bottom-color: #ffff;
+                    cursor: pointer;
                 }
             }
         }
@@ -156,6 +153,11 @@ const user = computed(() => {
             order: 1;
         }
     }
+}
+.arrow {
+    height: 20px;
+    width: auto;
+    margin-bottom: -4px;
 }
 
 .no-user:first-child {
