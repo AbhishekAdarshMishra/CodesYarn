@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^38.0.1",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
     "core-js": "^3.31.0",
     "firebase": "^9.22.2",
     "pinia": "^2.1.4",
