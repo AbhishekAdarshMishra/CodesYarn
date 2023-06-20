@@ -27,8 +27,8 @@ export const useStore = defineStore('store', {
         blogHtml: "Write your blog title here...",
         blogTitle: "",
         blogPhotoName:"",
-        blogPhotoFileUrl: null,
-        blogPhotoPreview: null,
+        blogPhotoFileURL: null,
+        blogPhotoPreview: false,
 
     }),
     getters: {
@@ -53,6 +53,15 @@ export const useStore = defineStore('store', {
         },
         setProfileInitials() {
             this.profileInitials = this.profileFirstName.match(/(\b\S)?/g).join("") + this.profileLastName.match(/(\b\S)?/g).join("");
+        },
+        fileNameChange( payload) {
+            this.blogPhotoName = payload;
+        },
+        createFileURL( payload) {
+            this.blogPhotoFileURL = payload;
+        },
+        openPhotoPreview() {
+            this.blogPhotoPreview = !this.blogPhotoPreview;
         },
 
         // ----------------------Firebase------------------

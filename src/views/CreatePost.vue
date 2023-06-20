@@ -1,12 +1,28 @@
 <template>
     <div class="create-post">
+        <BlogCoverPreview v-show="blogPhotoPreview" />
+        <Loading v-show="state.loading" />
         <div class="container">
-            <div v-html="state.editorData">
+            <div :class="{ invisible: !state.error }" class="err-message">
+                <p><span>Error:</span>{{ state.errorMsg }}</p>
             </div>
-            <div>{{ state.editorData }}
+            <div class="blog-info">
+                <input type="text" placeholder="Enter Blog Title" v-model="blogTitle" />
+                <div class="upload-file">
+                    <label for="blog-photo">Upload Cover Photo</label>
+                    <input type="file" id="blog-photo" @change="fileChange($event)" accept=".png, .jpg, ,jpeg" />
+                    <button @click="openPreview" class="preview" :class="{ 'button-inactive': !blogPhotoFileURL }">
+                        Preview Photo
+                    </button>
+                    <span><b>File Chosen: </b>{{ blogPhotoName }} </span>
+                </div>
             </div>
             <div class="editor">
-                <ckeditor :editor="state.editor" v-model="state.editorData" :config="state.editorConfig"></ckeditor>
+                <ckeditor :editor="state.editor" v-model="blogHtml" :config="state.editorConfig"></ckeditor>
+            </div>
+            <div class="blog-actions">
+                <router-link :to="{ name: 'BlogPreview' }"><button>Preview</button></router-link>
+                <button @click="uploadBlog">Publish Blog</button>
             </div>
         </div>
     </div>
@@ -15,9 +31,19 @@
 <script lang="ts" setup>
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
+import db from "../firebase/firebaseinit";
+
+import { useStore } from '../store/store';
+import { storeToRefs } from 'pinia';
+import BlogCoverPreview from "../components/BlogCoverPreview.vue";
+import Loading from '../components/Loading.vue';
+
+const { blogHtml, blogPhotoFileURL, blogPhotoName, blogPhotoPreview, blogTitle, profileId } = storeToRefs(useStore())
+const { createFileURL, fileNameChange, openPhotoPreview } = useStore() as any;
+
 
 class MyUploadAdapter {
     loader: any;
@@ -26,7 +52,7 @@ class MyUploadAdapter {
     }
     upload() {
         return this.loader.file
-            .then((file:any) => new Promise((resolve, reject) => {
+            .then((file: any) => new Promise((resolve, reject) => {
                 this.Request(file, resolve);
             }));
     }
@@ -58,27 +84,102 @@ interface State {
     editor: any,
     editorData: string,
     editorConfig: any
+    file: null | any,
+    error: null | any,
+    errorMsg: null | any,
+    loading: null | any
 }
 
 const state: State = reactive({
     editor: ClassicEditor,
     editorData: '<div>Content of the editor.</div>',
     editorConfig: {
-        // plugins: [Base64UploadAdapter ],
         extraPlugins: [MyCustomUploadAdapterPlugin],
-    }
+    },
+    file: null,
+    error: null,
+    errorMsg: null,
+    loading: null,
 });
 
-// function uploader(editor) {
-//     editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
-//                         return new CustomUploadAdapter( loader );
-//     };
-// }
+
 function MyCustomUploadAdapterPlugin(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-        // Configure the URL to the upload script in your back-end here!
         return new MyUploadAdapter(loader);
     };
+}
+
+async function uploadBlog() {
+    if (blogTitle && blogHtml) {
+        if (state.file) {
+            state.loading = true;
+            const storageRef = firebase.storage().ref();
+              const docRef = storageRef.child(`documents/BlogCoverPhotos/${blogPhotoName.value}`);
+              docRef.put(state.file).on(
+                "state_changed",
+                (snapshot) => {
+                  console.log(snapshot);
+                },
+                (err) => {
+                  console.log(err);
+                  state.loading = false;
+                },
+                async () => {
+                await uploadPost(docRef);
+            }
+              );
+            return;
+        }
+        state.error = true;
+        state.errorMsg = "Please ensure you uploaded a cover photo!";
+        setTimeout(() => {
+            state.error = false;
+        }, 5000);
+        return;
+    }
+    state.error = true;
+    state.errorMsg = "Please ensure Blog Title & Blog Post has been filled!";
+    setTimeout(() => {
+        state.error = false;
+    }, 5000);
+    return;
+}
+
+async function uploadPost(docRef) {
+    const downloadURL = await docRef.getDownloadURL();
+    console.log(downloadURL);
+    const timestamp = await Date.now();
+    const dataBase = await db.collection("blogPosts").doc();
+
+    await dataBase.set({
+        blogID: dataBase.id,
+        blogHTML: blogHtml.value,
+        blogCoverPhoto: downloadURL,
+        blogCoverPhotoName: blogPhotoName.value,
+        blogTitle: blogTitle.value,
+        profileId: profileId.value,
+        date: timestamp,
+    });
+    //   await this.$store.dispatch("getPost");
+    state.loading = false;
+    //   this.$router.push({ name: "ViewBlog", params: { blogid: dataBase.id } });
+
+}
+
+function fileChange($event: any) {
+    const target = $event.target as HTMLInputElement;
+    if (target && target.files) {
+        state.file = target.files[0];
+        const fileName = state.file.name;
+        fileNameChange(fileName);
+        createFileURL(URL.createObjectURL(state.file));
+    }
+
+
+}
+
+function openPreview() {
+    openPhotoPreview();
 }
 </script>
 
@@ -131,7 +232,7 @@ function MyCustomUploadAdapterPlugin(editor) {
         border-radius: 8px;
         color: #fff;
         margin-bottom: 10px;
-        background-color: #303030;
+        background-color: #cb4141;
         opacity: 1;
         transition: 0.5s ease all;
 
@@ -149,7 +250,7 @@ function MyCustomUploadAdapterPlugin(editor) {
         margin-bottom: 32px;
 
         input:nth-child(1) {
-            min-width: 300px;
+            min-width: 20%;
         }
 
         input {
@@ -187,8 +288,37 @@ function MyCustomUploadAdapterPlugin(editor) {
         }
     }
 
-    .editor {
-        height: 60vh;
+    @media (max-width: 500px) {
+        .upload-file {
+            flex-direction: column;
+
+            input {
+                margin-top: 10px;
+            }
+
+            .preview {
+                margin-top: 10px;
+            }
+
+            span {
+                margin-top: 10px;
+            }
+        }
+    }
+
+    @media (max-width: 800px) {
+        .blog-info {
+            flex-direction: column;
+        }
+
+        .upload-file {
+            margin-top: 10px;
+
+        }
+    }
+
+    .ck-editor__editable_inline {
+        height: 50vh;
         display: flex;
         flex-direction: column;
 
@@ -213,10 +343,20 @@ function MyCustomUploadAdapterPlugin(editor) {
 
     .blog-actions {
         margin-top: 32px;
+        display: flex;
 
         button {
             margin-right: 16px;
         }
     }
-}
-</style>
+
+    @media (max-width: 500px) {
+        .blog-actions {
+            flex-direction: column;
+
+            button {
+                margin-top: 10px;
+            }
+        }
+    }
+}</style>
