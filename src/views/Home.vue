@@ -6,7 +6,7 @@
             <div class="container">
                 <h3>View More Recent Blogs</h3>
                 <div class="blog-cards">
-                    <BlogCard :post="post" v-for="(post, index) in allBlogCards" :key="index" />
+                    <BlogCard :post="post" v-for="(post, index) in getBlogPosts" :key="index" />
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@ const state: State = {
     ],
 }
 
-const { allBlogCards, user } = storeToRefs(useStore());
+const { allBlogCards, user, getBlogPosts } = storeToRefs(useStore() as any);
 
 
 const blogPostsFeed = computed(() => {

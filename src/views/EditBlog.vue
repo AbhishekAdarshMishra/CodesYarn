@@ -22,7 +22,7 @@
             </div>
             <div class="blog-actions">
                 <router-link :to="{ name: 'BlogPreview' }"><button>Preview</button></router-link>
-                <button @click="uploadBlog">Publish Blog</button>
+                <button @click="updateBlog">Save Changes</button>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
 <script lang="ts" setup>
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import db from "../firebase/firebaseinit";
@@ -40,11 +40,12 @@ import { useStore } from '../store/store';
 import { storeToRefs } from 'pinia';
 import BlogCoverPreview from "../components/BlogCoverPreview.vue";
 import Loading from '../components/Loading.vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const { blogHtml, blogPhotoFileURL, blogPhotoName, blogPhotoPreview, blogTitle, profileId } = storeToRefs(useStore())
-const { createFileURL, fileNameChange, openPhotoPreview,getPost } = useStore() as any;
+const { createFileURL, fileNameChange, openPhotoPreview ,allBlogCards, setBlogState, getPost, updateEditPost} = useStore() as any;
 
+const route = useRoute();
 const router = useRouter();
 class MyUploadAdapter {
     loader: any;
@@ -88,7 +89,9 @@ interface State {
     file: null | any,
     error: null | any,
     errorMsg: null | any,
-    loading: null | any
+    loading: null | any,
+    routeId: null | any,
+    currentBlog: null | any,
 }
 
 const state: State = reactive({
@@ -101,6 +104,8 @@ const state: State = reactive({
     error: null,
     errorMsg: null,
     loading: null,
+    routeId: null,
+    currentBlog: null
 });
 
 
@@ -110,7 +115,7 @@ function MyCustomUploadAdapterPlugin(editor) {
     };
 }
 
-async function uploadBlog() {
+async function updateBlog() {
     if (blogTitle && blogHtml) {
         if (state.file) {
             state.loading = true;
@@ -126,17 +131,21 @@ async function uploadBlog() {
                   state.loading = false;
                 },
                 async () => {
-                await uploadPost(docRef);
-            }
-              );
+                await updatePost(docRef);
+            });
             return;
         }
-        state.error = true;
-        state.errorMsg = "Please ensure you uploaded a cover photo!";
-        setTimeout(() => {
-            state.error = false;
-        }, 5000);
-        return;
+        state.loading = true;
+        const dataBase = await db.collection("blogPosts").doc(state.routeId);
+
+        await dataBase.update({
+            blogHtml: blogHtml.value,
+            blogTitle: blogTitle.value,
+        });
+        await updateEditPost(state.routeId);
+        state.loading = false;
+        router.push({ name: "ViewBlog", params: { blogid: dataBase.id } });
+        return
     }
     state.error = true;
     state.errorMsg = "Please ensure Blog Title & Blog Post has been filled!";
@@ -146,24 +155,19 @@ async function uploadBlog() {
     return;
 }
 
-async function uploadPost(docRef) {
+async function updatePost(docRef) {
     const downloadURL = await docRef.getDownloadURL();
-    console.log(downloadURL);
-    const timestamp = await Date.now();
-    const dataBase = await db.collection("blogPosts").doc();
+    const dataBase = await db.collection("blogPosts").doc(state.routeId);
 
-    await dataBase.set({
-        blogID: dataBase.id,
+    await dataBase.update({
         blogHtml: blogHtml.value,
         blogCoverPhoto: downloadURL,
         blogPhotoName: blogPhotoName.value,
         blogTitle: blogTitle.value,
-        profileId: profileId.value,
-        date: timestamp,
     });
-    await getPost();
+    updateEditPost(state.routeId);
     state.loading = false;
-      router.push({ name: "ViewBlog", params: { blogid: dataBase.id } });
+    router.push({ name: "ViewBlog", params: { blogid: dataBase.id } });
 
 }
 
@@ -182,6 +186,14 @@ function fileChange($event: any) {
 function openPreview() {
     openPhotoPreview();
 }
+
+onMounted(async()=>{
+    state.routeId = route.params.blogid;
+    state.currentBlog = await allBlogCards.filter(post=> {
+        return post.blogID === state.routeId;
+    });
+    setBlogState(state.currentBlog[0]);
+})
 </script>
 
 <style lang="scss">

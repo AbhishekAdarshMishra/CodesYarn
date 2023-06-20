@@ -17,6 +17,7 @@ import { useRoute } from 'vue-router'
 import {useStore} from './store/store';
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
+import db from "./firebase/firebaseinit"
 
 const route = computed(()=>{
   if(useRoute().path=='/login' || useRoute().path=='/register' || useRoute().path=='/forgetPassword')
@@ -24,15 +25,15 @@ const route = computed(()=>{
   return true;
 });
 
-const { updateUser, getCurrentUser } = useStore();
-
+const { updateUser, getCurrentUser, getPost } = useStore();
 onMounted(()=>{
   firebase.auth().onAuthStateChanged((user)=> {
     updateUser(user);
     if(user) {
       getCurrentUser();
     }
-  })
+  });
+  getPost();
 })
 </script>
 

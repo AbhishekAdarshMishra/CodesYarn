@@ -14,7 +14,7 @@ import { computed, onBeforeUnmount } from 'vue';
 import {useStore} from '../store/store';
 import {storeToRefs} from 'pinia';
 import BlogCard from '../components/BlogCard.vue';
-const { allBlogCards, BlogCardsEdit, isprofileAdmin } = storeToRefs(useStore())
+const { allBlogCards, BlogCardsEdit, isprofileAdmin } = storeToRefs(useStore());
 const { toggleBlogCardsEdit } = useStore();
 const editPost = computed({
       get() {
