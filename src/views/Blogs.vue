@@ -1,7 +1,7 @@
 <template>
     <div class="blog-card-wrap">
       <div class="blog-cards container">
-        <div v-if="profileAdmin" class="toggle-edit">
+        <div v-if="isAdmin" class="toggle-edit">
           <span>Toggle Editing Post</span>
           <input type="checkbox" v-model="editPost" />
         </div>
@@ -15,7 +15,7 @@ import {useStore} from '../store/store';
 import {storeToRefs} from 'pinia';
 import BlogCard from '../components/BlogCard.vue';
 const { allBlogCards, BlogCardsEdit, isprofileAdmin } = storeToRefs(useStore());
-const { toggleBlogCardsEdit } = useStore();
+const { toggleBlogCardsEdit, isAdmin } = useStore() as any;
 const editPost = computed({
       get() {
         return BlogCardsEdit;
@@ -24,10 +24,6 @@ const editPost = computed({
         toggleBlogCardsEdit(val);
       }
     });
-
-const profileAdmin = computed(()=> {
-    return isprofileAdmin;
-});
 onBeforeUnmount(()=>{
   toggleBlogCardsEdit(false);
   });

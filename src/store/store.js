@@ -43,6 +43,9 @@ export const useStore = defineStore('store', {
         getBlogPosts: (state) => {
             return state.blogPosts.slice(0, 4);
         },
+        isAdmin: (state) => {
+            return state.isprofileAdmin;
+        }
 
     },
     actions: {
@@ -80,6 +83,9 @@ export const useStore = defineStore('store', {
             this.blogTitle = payload.blogTitle;
             this.blogPhotoFileURL = payload.blogPhotoFileURL;
             this.blogPhotoName = payload.blogPhotoName;
+        },
+        logout() {
+            this.isprofileAdmin = false;
         },
         async deleteBlogPost(id) {
             await db.collection("blogPosts").doc(id).delete().catch((err) => {

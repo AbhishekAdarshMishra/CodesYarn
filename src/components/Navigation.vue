@@ -32,7 +32,7 @@
                                     <p>Profile</p>
                                 </router-link>
                             </div>
-                            <div v-if="true" class="option">
+                            <div v-if="isAdmin" class="option">
                                 <router-link class="option" :to="{ name: 'Admin' }">
                                     <img class="icon" src="../assets/icons/admin.png"/>
                                     <p>Admin</p>
@@ -72,6 +72,8 @@ const { isprofileAdmin, user, profileInitials, profileEmail,
     profileUsername,
     profileId } = storeToRefs(useStore());
 
+    const {logout, isAdmin} = useStore() as any;
+
 interface State {
     profileMenu: boolean | null,
     mobile: boolean | null;
@@ -109,6 +111,7 @@ function toggleProfileMenu(e) {
 function signOut() {
     firebase.auth().signOut();
     window.location.reload();
+    logout();
 }
 window.addEventListener("resize", checkScreen);
 checkScreen();

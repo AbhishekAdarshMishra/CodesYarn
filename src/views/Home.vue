@@ -1,7 +1,8 @@
 <template>
     <div class="home">
-        <BlogPost v-if="!user" :post="state.welcomeScreen" />
-        <BlogPost :post="post" v-for="(post, index) in blogPostsFeed" :key="index" />
+        <FrontPage></FrontPage>
+        <!-- <BlogPost v-if="!user" :post="state.welcomeScreen" /> -->
+        <!-- <BlogPost :post="post" v-for="(post, index) in blogPostsFeed" :key="index" /> -->
         <div class="blog-card-wrap">
             <div class="container">
                 <h3>View More Recent Blogs</h3>
@@ -25,6 +26,7 @@
 import { computed } from "vue";
 import BlogPost from "../components/BlogPost.vue";
 import BlogCard from "../components/BlogCard.vue";
+import FrontPage from "../components/FrontPage.vue";
 import {useStore} from '../store/store';
 import {storeToRefs} from 'pinia';
 
