@@ -103,12 +103,12 @@ const blogPostsFeed = computed(() => {
         }
 
         .router-button {
-            display: flex;
+            // display: flex;
             font-size: 14px;
             text-decoration: none;
             color: white;
             background-color: rgb(49, 47, 47);
-            padding: 5px 15px;
+            padding: 10px 25px;
             border-radius: 20px;
 
             @media (min-width: 800px) {
