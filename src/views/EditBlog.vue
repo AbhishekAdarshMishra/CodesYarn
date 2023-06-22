@@ -3,9 +3,6 @@
         <BlogCoverPreview v-show="blogPhotoPreview" />
         <Loading v-show="state.loading" />
         <div class="container">
-            <div :class="{ invisible: !state.error }" class="err-message">
-                <p><span>Error:</span>{{ state.errorMsg }}</p>
-            </div>
             <div class="blog-info">
                 <input type="text" placeholder="Enter Blog Title" v-model="blogTitle" />
                 <div class="upload-file">
@@ -23,6 +20,9 @@
             <div class="blog-actions">
                 <router-link :to="{ name: 'BlogPreview' }"><button>Preview</button></router-link>
                 <button @click="updateBlog">Save Changes</button>
+            </div>
+            <div :class="{ invisible: !state.error }" class="err-message">
+                <p><span>Error:</span>{{ state.errorMsg }}</p>
             </div>
         </div>
     </div>
@@ -42,8 +42,8 @@ import BlogCoverPreview from "../components/BlogCoverPreview.vue";
 import Loading from '../components/Loading.vue';
 import { useRoute, useRouter } from 'vue-router';
 
-const { blogHtml, blogPhotoFileURL, blogPhotoName, blogPhotoPreview, blogTitle, profileId } = storeToRefs(useStore())
-const { createFileURL, fileNameChange, openPhotoPreview ,allBlogCards, setBlogState, getPost, updateEditPost} = useStore() as any;
+const { blogHtml, blogPhotoFileURL, blogPhotoName, blogPhotoPreview, blogTitle, profileId ,blogFile} = storeToRefs(useStore() as any)
+const { createFileURL, fileNameChange, openPhotoPreview ,allBlogCards, setBlogState, getPost, updateEditPost, setBlogFile} = useStore() as any;
 
 const route = useRoute();
 const router = useRouter();
@@ -117,11 +117,11 @@ function MyCustomUploadAdapterPlugin(editor) {
 
 async function updateBlog() {
     if (blogTitle && blogHtml) {
-        if (state.file) {
+        if (blogFile.value) {
             state.loading = true;
             const storageRef = firebase.storage().ref();
-              const docRef = storageRef.child(`documents/BlogCoverPhotos/${blogPhotoName.value}`);
-              docRef.put(state.file).on(
+              const docRef = storageRef.child(`documents/BlogCoverPhotos/${blogPhotoName.value+Date.now()}`);
+              docRef.put(blogFile.value).on(
                 "state_changed",
                 (snapshot) => {
                   console.log(snapshot);
@@ -174,10 +174,10 @@ async function updatePost(docRef) {
 function fileChange($event: any) {
     const target = $event.target as HTMLInputElement;
     if (target && target.files) {
-        state.file = target.files[0];
-        const fileName = state.file.name;
+        setBlogFile(target.files[0]);
+        const fileName = blogFile.value.name;
         fileNameChange(fileName);
-        createFileURL(URL.createObjectURL(state.file));
+        createFileURL(URL.createObjectURL(blogFile.value));
     }
 
 
