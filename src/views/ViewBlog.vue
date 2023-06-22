@@ -46,6 +46,7 @@ interface State {
         font-size: 16px;
     }
     .container {
+      padding-top: 20px;
       img{
         width: 50%;
       }

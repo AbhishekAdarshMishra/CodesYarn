@@ -9,7 +9,7 @@
                 <ul v-show="!state.mobileNav && !state.mobile">
                     <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
                     <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
-                    <router-link v-if="isprofileAdmin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
+                    <router-link v-if="isprofileAdmin" @click="setBlogFileState" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
                     <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
                 </ul>
 
@@ -53,7 +53,7 @@
             <ul class="mobile-nav" v-show="state.mobileNav">
                 <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
                 <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
-                <router-link v-if="isprofileAdmin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
+                <router-link @click="setBlogFileState" v-if="isprofileAdmin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
                 <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
             </ul>
         </transition>
@@ -73,7 +73,7 @@ const { isprofileAdmin, user, profileInitials, profileEmail,
     profileUsername,
     profileId } = storeToRefs(useStore());
 
-    const {logout, isAdmin} = useStore() as any;
+    const {logout, isAdmin, setBlogFile,fileNameChange} = useStore() as any;
 
 interface State {
     profileMenu: boolean | null,
@@ -97,6 +97,11 @@ function checkScreen() {
     state.mobile = false;
     state.mobileNav = false;
     return;
+}
+
+function setBlogFileState() {
+    setBlogFile(null);
+    fileNameChange("");
 }
 
 function toggleMobileNav() {

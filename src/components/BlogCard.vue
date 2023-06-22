@@ -9,7 +9,7 @@
             </div>
         </div>
         <router-link class="link" :to="{ name: 'ViewBlog', params: { blogid: props.post.blogID } }">
-        <img class="photo" :src="post.blogCoverPhoto" alt="{{ post.blogCoverName }}" />
+        <img class="photo" :src="post.blogCoverPhoto" />
         </router-link>
         <div class="info">
             <h2>{{ props.post.blogTitle }}</h2>
