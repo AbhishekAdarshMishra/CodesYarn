@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div >
         <FrontPage></FrontPage>
         <!-- <BlogPost v-if="!user" :post="state.welcomeScreen" /> -->
         <!-- <BlogPost :post="post" v-for="(post, index) in blogPostsFeed" :key="index" /> -->

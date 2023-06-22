@@ -119,6 +119,9 @@ checkScreen();
 </script>
 
 <style lang="scss" scoped>
+.container {
+    min-height: 50px;
+}
 header {
     background-color: #fff;
     padding: 0 25px;

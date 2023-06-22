@@ -31,6 +31,7 @@ onBeforeUnmount(()=>{
 <style lang="scss" scoped>
 .blog-card-wrap {
     padding: 20px;
+    min-height: 100vh;
     h3 {
         font-weight: 300;
         font-size: 28px;

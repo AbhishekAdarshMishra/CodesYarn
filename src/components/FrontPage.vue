@@ -27,12 +27,13 @@ import { useRouter } from 'vue-router';
 
 <style lang="scss" scoped>
 .page {
-    
+    width: auto;
     height: 90vh;
     display: flex;
     flex-direction: row;
 
     .left {
+        width:50%;
         .tagline {
             position: relative;
             left: 20%;
@@ -53,6 +54,7 @@ import { useRouter } from 'vue-router';
     .right {
         background-color: black;
         margin: 0;
+        width: 50%;
         
         .image {
             position: relative;
@@ -67,4 +69,17 @@ import { useRouter } from 'vue-router';
         }
     }
 }
+@media (max-width: 760px) {
+    .page {
+       flex-direction: column; 
+       .left {
+        width: 100%;
+        height: 90vh;
+       }
+       .right {
+        height: 90vh;
+        width: 100%;
+       }
+    }
+  }
 </style>

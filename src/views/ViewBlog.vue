@@ -1,7 +1,7 @@
 <template>
     <div class="post-view" v-if="state.currentBlog">
       <div class="container quillWrapper">
-        <h1>{{ state.currentBlog[0].blogTitle }}</h1>
+        <h1><u>{{ state.currentBlog[0].blogTitle }}</u></h1>
         <h3>Posted on: {{ new Date(state.currentBlog[0].blogDate).toLocaleString("en-us", { dateStyle: "long" }) }}</h3>
         <img :src="state.currentBlog[0].blogCoverPhoto" alt="" />
         <div class="post-content ql-editor" v-html="state.currentBlog[0].blogHtml"></div>
@@ -34,13 +34,21 @@ interface State {
   
   <style lang="scss">
   .post-view {
+    h1{
+      font-size: 35px;
+    }
     h3 {
       font-weight: 400;
-      font-size: 14px;
+      font-size: 16px;
       margin-bottom: 24px;
     }
     .post-content{
         font-size: 16px;
+    }
+    .container {
+      img{
+        width: 50%;
+      }
     }
   }
   </style>
