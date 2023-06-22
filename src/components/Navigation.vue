@@ -47,7 +47,8 @@
                 </div>
             </div>
         </nav>
-        <img @click="toggleMobileNav" src="../assets/icons/menu.svg" class="menu-icon" v-show="state.mobile" />
+        <img @click="toggleMobileNav" src="../assets/icons/menu.svg" class="menu-icon" v-show="state.mobile && !state.mobileNav" />
+        <img src="../assets/icons/close.png" class="menu-icon" v-show="state.mobile && state.mobileNav" />
         <transition name="mobile-nav">
             <ul class="mobile-nav" v-show="state.mobileNav">
                 <router-link class="link" :to="{ name: 'Home' }">Home</router-link>

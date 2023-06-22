@@ -13,7 +13,7 @@
         </div>
         <div v-if="!user" class="updates">
             <div class="container">
-                <h2>never miss a post. Register for your free account today!</h2>
+                <h4>Never miss a post. Register for your free account today!</h4>
                 <router-link class="router-button" :to="{name: 'Register'}"> 
                     Register for CodesYarn
                 </router-link>
@@ -108,20 +108,20 @@ const blogPostsFeed = computed(() => {
             text-decoration: none;
             color: white;
             background-color: rgb(49, 47, 47);
-            padding: 10px 25px;
+            padding: 15px 25px;
             border-radius: 20px;
 
             @media (min-width: 800px) {
-                margin-left: auto;
+                margin-left: 40%;
             }
         }
         .router-button:hover {
             background: rgb(85, 85, 87);
         }
 
-        h2 {
+        h4 {
             font-weight: 300;
-            font-size: 32px;
+            font-size: 25px;
             max-width: 425px;
             width: 100%;
             text-align: center;

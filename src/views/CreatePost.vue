@@ -354,6 +354,7 @@ function openPreview() {
     @media (max-width: 500px) {
         .blog-actions {
             flex-direction: column;
+            text-align: center;
 
             button {
                 margin-top: 10px;

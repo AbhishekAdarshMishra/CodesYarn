@@ -27,18 +27,18 @@ import { useRouter } from 'vue-router';
 
 <style lang="scss" scoped>
 .page {
-    width: auto;
-    height: 90vh;
+    width: 100%;
+    height: 92.75vh;
     display: flex;
     flex-direction: row;
 
     .left {
         width:50%;
         .tagline {
-            position: relative;
-            left: 20%;
-            width: 60%;
-            top: 35%;
+            padding-top: 35%;
+            padding-left: 15%;
+            padding-right: 15%;
+            height: inherit;
             .title {
                 font-weight: 700;
                 font-size: 30px;
@@ -57,8 +57,7 @@ import { useRouter } from 'vue-router';
         width: 50%;
         
         .image {
-            position: relative;
-        top: 40%;
+            margin-top: 45%;
             text-align: center;
             
             .img {
@@ -74,11 +73,15 @@ import { useRouter } from 'vue-router';
        flex-direction: column; 
        .left {
         width: 100%;
-        height: 90vh;
+        height: 70vh;
        }
        .right {
-        height: 90vh;
+        height: 70vh;
         width: 100%;
+        .image {
+            margin-top: 15%;
+            text-align: center;
+        }
        }
     }
   }
