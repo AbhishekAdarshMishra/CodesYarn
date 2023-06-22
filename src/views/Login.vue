@@ -87,9 +87,8 @@ function signIn() {
   z-index: 1;
 }
 .form-wrap {
-  overflow: hidden;
   display: flex;
-  height: 100vh;
+  height:100vh;
   justify-content: center;
   align-self: center;
   margin: 0 auto;
@@ -97,6 +96,10 @@ function signIn() {
   @media (min-width: 900px) {
     width: 100%;
   }
+  @media (max-width: 900px) {
+    height: auto;
+  }
+
 
   .login-register {
     margin-bottom: 32px;
@@ -104,6 +107,9 @@ function signIn() {
     .router-link {
       color: #000;
     }
+    @media (max-width: 900px) {
+    margin-top: 100px;
+  }
   }
 
   form {
@@ -218,6 +224,7 @@ function signIn() {
     background: rgb(62, 62, 63);
     background: linear-gradient(0deg, rgb(49, 49, 53) 0%, rgb(57, 58, 59) 100%);
     border: none;
+    margin-bottom: 40px;
   }
   .btn:hover {
     background: rgb(85, 85, 87);
