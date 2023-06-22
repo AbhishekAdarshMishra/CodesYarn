@@ -100,11 +100,39 @@ function checkScreen() {
 
 function toggleMobileNav() {
     state.mobileNav = !state.mobileNav;
+    if(state.mobileNav) {
+        document.addEventListener('mouseup', closeNavOnClickOutside);
+    }
+    else {
+        document.removeEventListener('mouseup', closeNavOnClickOutside);
+    }
 }
 
+function closeNavOnClickOutside(event: any) {
+    toggleMobileNav();
+}
+
+
 function toggleProfileMenu(e) {
-    if (e.target === profile.value) {
-        state.profileMenu = !state.profileMenu;
+    if(state.profileMenu) {
+        closeMenu(e);
+    }else {
+        openMenu(e);
+    }
+}
+function openMenu(event: any) {
+    state.profileMenu = true;
+    document.addEventListener('mouseup', closeModalOnClickOutside);
+}
+function closeMenu(event: any) {
+    state.profileMenu = false;
+    document.removeEventListener('mouseup', closeModalOnClickOutside);
+}
+
+function closeModalOnClickOutside(event: any) {
+    const v = (profile.value as any).contains(event.target);
+    if (!v) {
+    closeMenu(event);
     }
 }
 
