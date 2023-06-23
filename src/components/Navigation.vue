@@ -32,7 +32,7 @@
                                     <p>Profile</p>
                                 </router-link>
                             </div>
-                            <div v-if="isAdmin" class="option">
+                            <div v-if="isprofileAdmin" class="option">
                                 <router-link class="option" :to="{ name: 'Admin' }">
                                     <img class="icon" src="../assets/icons/admin.png"/>
                                     <p>Admin</p>
