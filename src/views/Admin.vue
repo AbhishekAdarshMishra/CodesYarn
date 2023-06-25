@@ -9,7 +9,7 @@
                         v-model="state.adminEmail" />
                 </div>
                 <span class="msg">{{ state.functionMsg }}</span>
-                <button @click="addAdmin" class="btn">Submit</button>
+                <CustomButtonBlack @click="addAdmin" >Submit</CustomButtonBlack>
             </div>
         </div>
     </div>
@@ -21,6 +21,7 @@ import "firebase/compat/functions";
 import { reactive } from "vue";
 import {useStore} from '../store/store';
 import {storeToRefs} from 'pinia';
+import CustomButtonBlack from "../components/CustomButtonBlack.vue";
 
 const {updateAdminAccess} = useStore() as any;
 

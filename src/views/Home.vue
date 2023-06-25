@@ -75,7 +75,7 @@ const blogPostsFeed = computed(() => {
 <style lang="scss" scoped>
 .blog-card-wrap {
     h3 {
-        font-weight: 300;
+        font-weight: 500;
         font-size: 28px;
         margin-bottom: 32px;
     }

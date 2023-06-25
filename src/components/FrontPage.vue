@@ -2,9 +2,10 @@
     <div class="page">
         <div class="left">
             <div class="tagline">
-                <div class="title">CodesYarn...</div>
+                <div class="title">CodesYarn </div>
+                <h2>Platform to <span class="typed-text wrap"></span><span class="cursor blink">&nbsp;</span></h2>
                 <div class="content">Achieve your coding interview related goals with CodesYarn's structured and stremlined resouces.</div>
-                <button class="btn" @click="ViewBlog">View Blogs</button>
+                <CustomButton @custom-click="ViewBlog"> View Blog</CustomButton>
             </div>
         </div>
         <div class="right">
@@ -16,13 +17,55 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import CustomButton from '../components/CustomButton.vue'
 
 
-    const router = useRouter();
-    function ViewBlog() {
-        router.push({ name: "Blogs"});
+const router = useRouter();
+function ViewBlog() {
+    router.push({ name: "Blogs"});
+}
+
+
+onMounted(()=> {
+    const typedText = document.querySelector(".typed-text");
+const cursor = document.querySelector(".cursor");
+
+const textArray = ["Explore.","Enhance.", "Execute."];
+
+let textArrayIndex = 0;
+let charIndex = 0;
+
+function erase() {
+  if (charIndex > 0) {
+    cursor?.classList.remove('blink');
+    typedText!.textContent = textArray[textArrayIndex].slice(0, charIndex - 1);
+    charIndex--;
+    setTimeout(erase, 80);
+  } else {
+    cursor?.classList.add('blink');
+    textArrayIndex++;
+    if (textArrayIndex > textArray.length - 1) {
+      textArrayIndex = 0;
     }
+    setTimeout(type, 1000);
+  }
+}
+
+function type() {
+  if (charIndex <= textArray[textArrayIndex].length - 1) {
+    cursor?.classList.remove('blink');
+    typedText!.textContent += textArray[textArrayIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(type, 120);
+  } else {
+    cursor?.classList.add('blink');
+    setTimeout(erase, 1000);
+  }
+}
+    type();
+})
 </script>
 
 <style lang="scss" scoped>
@@ -41,16 +84,19 @@ import { useRouter } from 'vue-router';
             height: inherit;
             .title {
                 font-weight: 700;
-                font-size: 40px;
-                margin-bottom: 20px;
+                font-size: 50px;
                 overflow: hidden; 
-                animation: typing 4s steps(100) infinite; 
+                // animation: typing 4s steps(100) infinite; 
                 display: inline-block;
+                color: #525FE1;
             }
             
             @keyframes typing {
                 from { width: 0; }
                 to { width: 50%; }
+            }
+            .wrap {
+                border-bottom: .1em solid;
             }
             
             .content {
@@ -60,6 +106,28 @@ import { useRouter } from 'vue-router';
         }
     }
 
+    .typed-text {
+        color: #525FE1;
+    }
+    .cursor {
+        display: inline-block;
+        width: 3px;
+        margin-left: 4px;
+        background: black;
+    }
+
+    .cursor.blink {
+        animation: blink 0.8s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+    0%, 100% {
+        background: #525FE1;
+    }
+    40%, 50% {
+        background: transparent;
+    }
+    }
     .right {
         background-color: white;
         margin: 0;
@@ -97,7 +165,7 @@ import { useRouter } from 'vue-router';
        flex-direction: column; 
        .left {
         width: 100%;
-        height: 70vh;
+        height: 60vh;
        }
        .right {
         height: auto;
@@ -113,6 +181,10 @@ import { useRouter } from 'vue-router';
         }
         
        }
+    }
+    .h2 {
+        display: block;
+        margin-bottom: 0;
     }
   }
 </style>

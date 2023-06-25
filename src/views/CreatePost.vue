@@ -9,9 +9,9 @@
                 <div class="upload-file">
                     <label for="blog-photo">Upload Cover Photo</label>
                     <input type="file" id="blog-photo" @change="fileChange($event)" accept=".png, .jpg, ,jpeg" />
-                    <button @click="openPreview" class="preview" :class="{ 'button-inactive': !blogPhotoFileURL }">
+                    <CustomButtonBlack @click="openPreview" class="preview" :class="{ 'button-inactive': !blogPhotoFileURL }">
                         Preview Photo
-                    </button>
+                    </CustomButtonBlack>
                     <span><b>File Chosen: </b>{{ blogPhotoName }} </span>
                 </div>
             </div>
@@ -19,8 +19,8 @@
                 <ckeditor :editor="state.editor" v-model="blogHtml" :config="state.editorConfig"></ckeditor>
             </div>
             <div class="blog-actions">
-                <router-link :to="{ name: 'BlogPreview' }"><button>Preview</button></router-link>
-                <button @click="uploadBlog">Publish Blog</button>
+                <router-link :to="{ name: 'BlogPreview' }"><CustomButtonBlack>Preview</CustomButtonBlack></router-link>
+                <CustomButtonBlack @click="uploadBlog">Publish Blog</CustomButtonBlack>
             </div>
             <div :class="{ invisible: !state.error }" class="err-message">
                 <p><span>Error:</span>{{ state.errorMsg }}</p>
@@ -32,6 +32,7 @@
 <script lang="ts" setup>
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CustomButtonBlack from '../components/CustomButtonBlack.vue';
 import { reactive, ref } from 'vue';
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
@@ -199,21 +200,19 @@ function openPreview() {
         color: #fff;
     }
 
-    label,
-    button,
-    .router-button {
-        transition: 0.5s ease-in-out all;
-        align-self: center;
-        font-size: 14px;
-        cursor: pointer;
-        border-radius: 20px;
-        padding: 12px 24px;
+    label{
+        background-color: #333334;
+        border-radius: 5px;
+        padding: 12px 25px;
         color: #fff;
-        background-color: #303030;
-        text-decoration: none;
+        border: 2px solid #333334;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 700;
 
         &:hover {
-            background-color: rgba(48, 48, 48, 0.7);
+            background-color: #fff;
+            color: #333334;
         }
     }
 

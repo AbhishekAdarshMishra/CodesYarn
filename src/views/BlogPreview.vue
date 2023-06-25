@@ -5,7 +5,7 @@
         <img class="img" :src="blogPhotoFileURL" alt="" />
         <div class="post-content ql-editor" v-html="blogHtml"></div>
       </div>
-      <button class="btn back" @click="backToPost">Back to Post</button>
+      <CustomButtonBlack class="back" @click="backToPost">Back</CustomButtonBlack>
     </div>
   </template>
   
@@ -13,6 +13,7 @@
   import router from '../router';
 import { useStore } from '../store/store';
 import { storeToRefs } from 'pinia';
+import CustomButtonBlack from '../components/CustomButtonBlack.vue';
 
     const { blogHtml, blogPhotoFileURL, blogTitle } = storeToRefs(useStore() as any);
 
@@ -52,7 +53,7 @@ import { storeToRefs } from 'pinia';
   }
   .back {
     position: absolute;
-    top: 60px;
+    top: 80px;
     left: 5px;
   }
   .btn{

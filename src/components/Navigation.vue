@@ -224,19 +224,20 @@ header {
             height: 40px;
             border-radius: 50%;
             color: #fff;
-            background-color: #303030;
+            background-color: rgb(55, 53, 53);
 
             span {
                 pointer-events: none;
             }
 
             .profile-menu {
+                border-radius: 20px;
                 position: absolute;
-                top: 50px;
+                top: 46px;
                 right: 0;
                 width: 280px;
-                background-color: #303030;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                background-color: rgb(55, 53, 53);
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 3px 6px -1px rgba(0, 0, 0, 0.06);
 
                 .info {
                     display: flex;

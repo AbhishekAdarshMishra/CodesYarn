@@ -25,7 +25,8 @@
                     <label for="email">Email:</label>
                     <input disabled type="text" id="email" v-model="profileEmail" />
                 </div>
-                <button @click="updateProfile" class="btn">Save Changes</button>
+                <CustomButtonBlack @custom-click="updateProfile" >Save Changes</CustomButtonBlack>
+
             </div>
         </div>
     </div>
@@ -36,6 +37,7 @@ import { reactive } from "vue";
 import Modal from "../components/Modal.vue";
 import { useStore } from '../store/store';
 import { storeToRefs } from 'pinia';
+import CustomButtonBlack from "../components/CustomButtonBlack.vue";
 
 const { isprofileAdmin, profileInitials, profileEmail, profileFirstName, profileLastName, profileUsername } = storeToRefs(useStore())
 const { updateUserSettings } = useStore() as any;

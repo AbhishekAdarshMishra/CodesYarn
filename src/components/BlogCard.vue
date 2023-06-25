@@ -15,7 +15,7 @@
             <h2>{{ props.post.blogTitle }}</h2>
             <h6>Posted on: {{ new Date(props.post.blogDate).toLocaleString("en-us", { dateStyle: "long" }) }}</h6>
             <router-link class="link" :to="{ name: 'ViewBlog', params: { blogid: props.post.blogID } }">
-            View The Post
+            <CustomButton btn="small">View The Post</CustomButton>
             <!-- <img src="../assets/icons/arrow.png" class="icon"/> -->
         </router-link>
         </div>
@@ -28,6 +28,7 @@ import { PropType, computed } from "vue";
 import { useStore } from "../store/store";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import CustomButton from "../components/CustomButtonBlack.vue"
 
 const { BlogCardsEdit} = storeToRefs(useStore() as any);
 const {deleteBlogPost} = useStore() as any;
@@ -108,8 +109,8 @@ function editBlog() {
         display: block;
         border-radius: 8px 8px 0 0;
         z-index: 1;
-        max-width: 350px;
-        min-height: 200px;
+        width: 350px;
+        height: 200px;
         object-fit: cover;
     }
 
@@ -138,30 +139,30 @@ function editBlog() {
             color: gray;
         }
 
-        .link {
-            cursor: pointer;
-            color: #fff;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            margin-top: auto;
-            font-weight: 500;
-            font-size: 12px;
-            padding-bottom: 4px;
-            transition: 0.5s ease-in all;
-            background-color: black;
-            padding: 8px 14px;
-            border-radius: 5px;
+        // .link {
+        //     cursor: pointer;
+        //     color: #fff;
+        //     text-decoration: none;
+        //     display: inline-flex;
+        //     align-items: center;
+        //     margin-top: auto;
+        //     font-weight: 500;
+        //     font-size: 12px;
+        //     padding-bottom: 4px;
+        //     transition: 0.5s ease-in all;
+        //     background-color: black;
+        //     padding: 8px 14px;
+        //     border-radius: 5px;
 
-            &:hover {
-                background-color: rgba(50, 48, 48, 0.8);
-                color: white;
-            }
+        //     &:hover {
+        //         background-color: rgba(50, 48, 48, 0.8);
+        //         color: white;
+        //     }
 
-            .arrow {
-                width: 10px;
-            }
-        }
+        //     .arrow {
+        //         width: 10px;
+        //     }
+        // }
     }
 }
 </style>
