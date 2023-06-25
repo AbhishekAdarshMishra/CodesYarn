@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import CustomButton from '../components/CustomButton.vue'
+import CustomButton from '../components/CustomButtonBlack.vue'
 
 
 const router = useRouter();
@@ -88,7 +88,7 @@ function type() {
                 overflow: hidden; 
                 // animation: typing 4s steps(100) infinite; 
                 display: inline-block;
-                color: #525FE1;
+                color: #333334;
             }
             
             @keyframes typing {
