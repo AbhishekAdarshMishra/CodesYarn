@@ -48,7 +48,16 @@ interface State {
     .container {
       padding-top: 20px;
       img{
+        height: 50vh;
         width: 50%;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        border: 10px solid black;
+      }
+      @media (max-width: 650px) {
+        img {
+          width: 80%;
+        }
       }
     }
   }
